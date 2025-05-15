@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventário Florestal - Coco Babaçu</title>
+    <linkrel="stylesheet"href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+</head>
+<body>
+<section class="section">
+    <div class="container">
+        <div class="box">
+            <h1 class="title has-text-success has-text-centered">Inventário Florestal - Coco Babaçu</h1>
+            <form method="post" enctype="multipart/form-data" action="/processar">
+                <div class="file is-centered is-boxed is-medium">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="fotos" multiple accept="image/*">
+                        <span class="file-cta">
+                            <span class="file-icon">📷</span>
+                            <span class="file-label">Selecione as fotos...</span>
+                        </span>
+                    </label>
+                </div>
+                <div class="field mt-6">
+                    <button class="button is-success is-fullwidth is-medium" type="submit">
+                        🌳 Gerar Relatório Excel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>
