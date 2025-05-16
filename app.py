@@ -62,7 +62,6 @@ def processar():
             tags = exifread.process_file(arquivo)
             lista_tags.append(tags)
 
-        # Correção crítica: criação segura do DataFrame
         colunas_para_manter = [
             "Image ImageDescription",
             "Image DateTime",
@@ -88,7 +87,7 @@ def processar():
 
         df_fotos_renamed['Data e Hora'] = df_fotos_renamed['Data e Hora'].replace('nan', pd.NA)
 
-        # Correção aplicada aqui (n=1 como keyword argument)
+        # Correção aqui: use n=1 como keyword argument
         partes = df_fotos_renamed['Data e Hora'].str.split(' ', n=1, expand=True)
         df_fotos_renamed['Hora'] = partes[1].str.strip() if partes.shape[1] > 1 else pd.NA
 
@@ -99,13 +98,14 @@ def processar():
             errors='coerce'
         ).dt.strftime('%d-%m-%Y')
 
+        # Corrija aqui para evitar erro de NAType
         df_fotos_renamed['Latitude'] = df_fotos_renamed['Latitude'].apply(extrair_valores_gps)
         df_fotos_renamed['Longitude'] = df_fotos_renamed['Longitude'].apply(extrair_valores_gps)
         df_fotos_renamed['Latitude'] = df_fotos_renamed['Latitude'].apply(
-            lambda x: ', '.join(x) if isinstance(x, list) else pd.NA
+            lambda x: ', '.join([str(item) if not pd.isna(item) else '' for item in x]) if isinstance(x, list) else pd.NA
         )
         df_fotos_renamed['Longitude'] = df_fotos_renamed['Longitude'].apply(
-            lambda x: ', '.join(x) if isinstance(x, list) else pd.NA
+            lambda x: ', '.join([str(item) if not pd.isna(item) else '' for item in x]) if isinstance(x, list) else pd.NA
         )
         df_fotos_renamed['Latitude GMS'] = df_fotos_renamed['Latitude'].apply(
             lambda x: converter_coordenada_para_gms(x, 'S', 'N')
