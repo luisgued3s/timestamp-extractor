@@ -1,5 +1,7 @@
-flask==3.0.2
+# requirements.txt
+Flask==3.0.2
 exifread==3.0.0
 pandas==2.2.2
 openpyxl==3.1.2
 gunicorn==21.2.0
+python-dateutil==2.9.0  # ESSENCIAL para o pandas no Render
